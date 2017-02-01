@@ -135,3 +135,85 @@ Failed:    0
 Total states run:     1
 Total run time:  25.771 s
 ```
+
+
+```sh
+sudo salt-call --local state.sls bison -l debug
+....
+[INFO    ] Executing state pkg.installed for bison
+[INFO    ] ['rpm', '-qa', '--queryformat', '%{NAME}_|-%{EPOCH}_|-%{VERSION}_|-%{RELEASE}_|-%{ARCH}_|-(none)\n']
+....
+[INFO    ] Executing command ['rpm', '-qa', '--queryformat', '%{NAME}_|-%{EPOCH}_|-%{VERSION}_|-%{RELEASE}_|-%{ARCH}_|-(none)\n'] in directory '/root'
+....
+[INFO    ] ['dnf', '--quiet', 'clean', 'expire-cache']
+[INFO    ] six_sudo_wrapper: found command in list using sudo # --> tkggo wrapper
+[INFO    ] Executing command ['/bin/sudo', 'dnf', '--quiet', 'clean', 'expire-cache'] in directory '/root' # --> tkggo wrapper
+[DEBUG   ] output:
+[INFO    ] Executing command ['dnf', '--quiet', 'check-update'] in directory '/root'
+[DEBUG   ] Failed to get holds, versionlock plugin is probably not installed
+[INFO    ] ['systemd-run', '--scope', 'dnf', '-y', '--best', '--allowerasing', 'install', 'bison']
+[INFO    ] ['systemd-run', '--scope', 'dnf', '-y', '--best', '--allowerasing', 'install', 'bison']
+[INFO    ] ['systemd-run', '--scope', 'dnf', '-y', '--best', '--allowerasing', 'install', 'bison']
+[INFO    ] ['systemd-run', '--scope', 'dnf', '-y', '--best', '--allowerasing', 'install', 'bison']
+[INFO    ] ['systemd-run', '--scope', 'dnf', '-y', '--best', '--allowerasing', 'install', 'bison']
+[INFO    ] ['systemd-run', '--scope', 'dnf', '-y', '--best', '--allowerasing', 'install', 'bison']
+[INFO    ] six_sudo_wrapper: found command in list using sudo # --> tkggo wrapper
+[INFO    ] Executing command ['/bin/sudo', 'systemd-run', '--scope', 'dnf', '-y', '--best', '--allowerasing', 'install', 'bison'] in directory '/root' # --> tkggo wrapper
+.....
+[INFO    ] six_sudo_wrapper: found command in list using sudo # --> tkggo wrapper
+[INFO    ] Executing command ['/bin/sudo', 'dnf', '-y', 'remove', 'bison'] in directory '/root' # --> tkggo wrapper
+[INFO    ] ['rpm', '-qa', '--queryformat', '%{NAME}_|-%{EPOCH}_|-%{VERSION}_|-%{RELEASE}_|-%{ARCH}_|-(none)\n']
+[INFO    ] Executing command ['rpm', '-qa', '--queryformat', '%{NAME}_|-%{EPOCH}_|-%{VERSION}_|-%{RELEASE}_|-%{ARCH}_|-(none)\n'] in directory '/root'
+[INFO    ] Made the following changes:
+'bison' changed from '3.0.4-4.fc24' to 'absent'
+
+local:
+----------
+          ID: install bison rpm
+    Function: pkg.installed
+        Name: bison
+      Result: True
+     Comment: The following packages were installed/updated: bison
+     Started: 20:47:33.283307
+    Duration: 27584.772 ms
+     Changes:
+              ----------
+              bison:
+                  ----------
+                  new:
+                      3.0.4-4.fc24
+                  old:
+----------
+          ID: remove bison rpm
+    Function: pkg.removed
+        Name: bison
+      Result: True
+     Comment: All targeted packages were removed.
+     Started: 20:48:00.878157
+    Duration: 7460.95 ms
+     Changes:
+              ----------
+              bison:
+                  ----------
+                  new:
+                  old:
+                      3.0.4-4.fc24
+
+Summary for local
+------------
+Succeeded: 2 (changed=2)
+Failed:    0
+------------
+Total states run:     2
+Total run time:  35.046 s
+   ```
+      ```yaml
+$ cat bison.sls
+"install bison rpm":
+  pkg.installed:
+    - name: bison
+
+"remove bison rpm":
+  pkg.removed:
+    - name: bison
+   ```
