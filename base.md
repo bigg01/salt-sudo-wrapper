@@ -40,3 +40,18 @@ else
     exec "$@"
 fi
 ```
+
+```
+sudo salt-call --local  config.get cmdlist
+local:
+    - service
+    - systemctl
+    - yum
+    - zypper
+sudo cat  /etc/salt/minion.d/sudo.conf
+cmdlist:
+ - service
+ - systemctl
+ - yum
+ - zypper
+ ```
