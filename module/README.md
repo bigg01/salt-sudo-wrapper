@@ -1,4 +1,16 @@
 # six wrapper module
+bigg01 detect if sudo needed or not
+six_sudo_wrapper: found command in list using sudo
+```sh
+cat /etc/salt/minion.d/sudo.conf
+sudocmdlist:
+ - service
+ - systemctl
+ - yum
+ - zypper
+ - dnf
+ - systemd-run
+```
 ```sh
 salt-call --local state.single pkg.removed name=bison  sudo=True -l info
 [INFO    ] Loading fresh modules for state activity
