@@ -206,8 +206,8 @@ Failed:    0
 ------------
 Total states run:     2
 Total run time:  35.046 s
-   ```
-      ```yaml
+```
+```sh
 $ cat bison.sls
 "install bison rpm":
   pkg.installed:
@@ -216,4 +216,4 @@ $ cat bison.sls
 "remove bison rpm":
   pkg.removed:
     - name: bison
-   ```
+```
