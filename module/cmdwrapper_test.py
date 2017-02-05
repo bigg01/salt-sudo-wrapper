@@ -6,8 +6,6 @@ import subprocess
 
 import shutil
 
-sudocmd = None
-
 
 def which(file):
     for path in os.environ["PATH"].split(os.pathsep):
@@ -19,8 +17,8 @@ def sudocmd():
     return str(which('sudo'))
 
 def sudo(cmd):
-    sudocmd = sudocmd()
-    def tags_decorator(func):
+    sudocmd = '/usr/bin/sudo' #sudocmd()
+    def sudo_decorator(func):
         @wraps(func)
         def func_wrapper(cmd):
             if isinstance(cmd, str):
@@ -29,16 +27,22 @@ def sudo(cmd):
                 cmd.insert(0, sudocmd)
             return "sudo {0}".format(cmd)
         return func_wrapper
-    return tags_decorator
+    return sudo_decorator
 
 
 @sudo("cmd")
 def _run(cmd):
     """returns some text"""
-    return 'systemctl restart test1'
+    return cmd
 
+def _run2(cmd):
+    """returns some text"""
+    return cmd
+    
 print(_run('ls'))
 
 print(_run(['ls', '-la']))
 
-print(sudocmd())
+print(_run2('ls'))
+
+print(_run2(['ls', '-la']))
