@@ -38,11 +38,9 @@ def _run(cmd):
 def _run2(cmd):
     """returns some text"""
     return cmd
-    
-print(_run('ls'))
 
+print(_run('ls'))
 print(_run(['ls', '-la']))
 
 print(_run2('ls'))
-
 print(_run2(['ls', '-la']))

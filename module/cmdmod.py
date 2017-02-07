@@ -65,30 +65,34 @@ def __virtual__():
     '''
     return __virtualname__
 
-
 # bigg01 sudo
-def six_get_sudocmdlist():
-    if __opts__.get('sudocmdlist'):
-        return __opts__.get('sudocmdlist')
+__opts__ = {
+            'sudocmdlist': ""
+           }
 
 def six_sudo_wrapper(cmd):
-    sudocmd = which('sudo')
-    sudo_check = False
-    for check_cmd in six_get_sudocmdlist():
-        if isinstance(cmd, str):
-            if cmd.find(check_cmd) != -1:     
-                sudo_check = True
-        if isinstance(cmd, list):
-            if check_cmd in cmd:
-                sudo_check = True
-        log.info(cmd)
-    if sudo_check: 
-        log.info("six_sudo_wrapper: found command in list using sudo")
-        if isinstance(cmd, str):
-            cmd = sudocmd + ' ' + cmd
-        if isinstance(cmd, list):
-            cmd.insert(0, sudocmd)
-    return cmd
+    if __opts__['sudocmdlist']:
+        six_get_sudocmdlist = __opts__['sudocmdlist']
+        sudocmd = which('sudo')
+        sudo_check = False
+        for check_cmd in six_get_sudocmdlist:
+            if isinstance(cmd, str):
+                if cmd.find(check_cmd) != -1:
+                    sudo_check = True
+                    log.info("six_sudo_wrapper: found '{0}' in list using sudo".format(cmd))
+            if isinstance(cmd, list):
+                if check_cmd in cmd:
+                    log.info("six_sudo_wrapper: found '{0}' in list using sudo".format(cmd[0]))
+                    sudo_check = True
+            log.info(cmd)
+        if sudo_check:
+            if isinstance(cmd, str):
+                cmd = sudocmd + ' ' + cmd
+            if isinstance(cmd, list):
+                cmd.insert(0, sudocmd)
+        return cmd
+    else:
+        return cmd
 # bigg01 sudo end
 
 def _check_cb(cb_):
@@ -313,13 +317,13 @@ def _run(cmd,
             .format(shell))
 
     log_callback = _check_cb(log_callback)
-       
+
     # tkggo
     #__salt__['config.get']('sudocmdlist')
     if 'sudo' in kwargs:
-        log.debug('tkggo hack sudo') 
+        log.debug('tkggo hack sudo')
         sudocmd = which('sudo')
-        log.debug(sudocmd) 
+        log.debug(sudocmd)
         if isinstance(cmd, str):
             cmd = sudocmd + ' ' + cmd
         else:
