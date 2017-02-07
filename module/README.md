@@ -217,3 +217,33 @@ $ cat bison.sls
   pkg.removed:
     - name: bison
 ```
+
+```sh
+journalctl -f _COMM=sudo
+-- Logs begin at Die 2014-10-14 15:21:00 CEST. --
+Feb 07 20:15:10 fedora-lamp sudo[30351]:      guo : TTY=pts/1 ; PWD=/home/guo ; USER=root ; COMMAND=/bin/bash
+Feb 07 20:15:10 fedora-lamp sudo[30351]: pam_systemd(sudo:session): Cannot create session: Already running in a session
+Feb 07 20:15:10 fedora-lamp sudo[30351]: pam_unix(sudo:session): session opened for user root by guo(uid=0)
+Feb 07 20:15:22 fedora-lamp sudo[30507]:     root : TTY=pts/0 ; PWD=/root ; USER=root ; COMMAND=/bin/dnf --quiet clean expire-cache
+Feb 07 20:15:22 fedora-lamp sudo[30507]: pam_systemd(sudo:session): Cannot create session: Already running in a session
+Feb 07 20:15:22 fedora-lamp sudo[30507]: pam_unix(sudo:session): session opened for user root by guo(uid=0)
+Feb 07 20:15:23 fedora-lamp sudo[30507]: pam_unix(sudo:session): session closed for user root
+Feb 07 20:15:37 fedora-lamp sudo[30622]:     root : TTY=pts/0 ; PWD=/root ; USER=root ; COMMAND=/bin/systemd-run --scope dnf -y --best --allowerasing install bison
+Feb 07 20:15:37 fedora-lamp sudo[30622]: pam_systemd(sudo:session): Cannot create session: Already running in a session
+Feb 07 20:15:37 fedora-lamp sudo[30622]: pam_unix(sudo:session): session opened for user root by guo(uid=0)
+Feb 07 20:18:56 fedora-lamp sudo[32323]:     root : TTY=pts/0 ; PWD=/root ; USER=root ; COMMAND=/bin/dnf -y remove bison
+Feb 07 20:18:56 fedora-lamp sudo[32323]: pam_systemd(sudo:session): Cannot create session: Already running in a session
+Feb 07 20:18:56 fedora-lamp sudo[32323]: pam_unix(sudo:session): session opened for user root by guo(uid=0)
+Feb 07 20:19:07 fedora-lamp sudo[32323]: pam_unix(sudo:session): session closed for user root
+Feb 07 20:19:27 fedora-lamp sudo[32567]:     root : TTY=pts/0 ; PWD=/root ; USER=root ; COMMAND=/bin/dnf --quiet clean expire-cache
+Feb 07 20:19:27 fedora-lamp sudo[32567]: pam_systemd(sudo:session): Cannot create session: Already running in a session
+Feb 07 20:19:27 fedora-lamp sudo[32567]: pam_unix(sudo:session): session opened for user root by guo(uid=0)
+Feb 07 20:19:27 fedora-lamp sudo[32567]: pam_unix(sudo:session): session closed for user root
+Feb 07 20:19:33 fedora-lamp sudo[32605]:     root : TTY=pts/0 ; PWD=/root ; USER=root ; COMMAND=/bin/systemd-run --scope dnf -y --best --allowerasing install bison
+Feb 07 20:19:33 fedora-lamp sudo[32605]: pam_systemd(sudo:session): Cannot create session: Already running in a session
+Feb 07 20:19:33 fedora-lamp sudo[32605]: pam_unix(sudo:session): session opened for user root by guo(uid=0)
+Feb 07 20:19:49 fedora-lamp sudo[32605]: pam_unix(sudo:session): session closed for user root
+Feb 07 20:20:44 fedora-lamp sudo[907]:     root : TTY=pts/0 ; PWD=/root ; USER=root ; COMMAND=/bin/systemctl status bison.service -n 0
+Feb 07 20:20:44 fedora-lamp sudo[907]: pam_systemd(sudo:session): Cannot create session: Already running in a session
+Feb 07 20:20:44 fedora-lamp sudo[907]: pam_unix(sudo:session): session opened for user root by guo(uid=0)
+Feb 07 20:20:44 fedora-lamp sudo[907]: pam_unix(sudo:session): session closed for user root
