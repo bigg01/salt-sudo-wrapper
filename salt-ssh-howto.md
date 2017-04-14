@@ -6,7 +6,13 @@ pip install --user salt-ssh
  1001  export PATH=$PATH:~/.local/bin
  1002  salt-ssh
 ```
-
+# salt-api
+```
+salt-api
+curl http://localhost:8000/run -H 'Accept: application/x-yaml' -d
+client='ssh' -d tgt='*' -d fun='test.ping' -d
+roster_file='/etc/salt/roster_pengyao
+```
 
 # sudo fix -n
 ```
