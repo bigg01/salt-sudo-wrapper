@@ -1,3 +1,13 @@
+# pip install userhome salt
+
+```
+pip install --user salt-ssh
+ 1000  ls -lahrt
+ 1001  export PATH=$PATH:~/.local/bin
+ 1002  salt-ssh
+```
+
+
 # sudo fix -n
 ```
 oi# bigg01 sudo
