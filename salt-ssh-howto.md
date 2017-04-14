@@ -1,5 +1,38 @@
+# sudo fix -n
 ```
- 
+oi# bigg01 sudo
+__opts__ = {
+            'sudocmdlist': ""
+           }
+
+def six_sudo_wrapper(cmd):
+    if __opts__['sudocmdlist']:
+        six_get_sudocmdlist = __opts__['sudocmdlist']
+        sudocmd = which('sudo')
+        sudo_check = False
+        for check_cmd in six_get_sudocmdlist:
+            if isinstance(cmd, str):
+                if cmd.find(check_cmd) != -1:
+                    sudo_check = True
+                    log.info("six_sudo_wrapper: found '{0}' in list using sudo".format(cmd))
+            if isinstance(cmd, list):
+                if check_cmd in cmd:
+                    log.info("six_sudo_wrapper: found '{0}' in list using sudo".format(cmd[0]))
+                    sudo_check = True
+            log.info(cmd)
+        if sudo_check:
+            if isinstance(cmd, str):
+                cmd = sudocmd + '-n' + ' ' + cmd
+            if isinstance(cmd, list):
+                cmd.insert(0, sudocmd)
+                cmd.insert(1, '-n')
+        return cmd
+    else:
+        return cmd
+# bigg01 sudo end
+```
+
+```
 
  salt-ssh  atomic1 grains.get test
 Permission denied for host atomic1, do you want to deploy the salt-ssh key? (password required):
